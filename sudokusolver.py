@@ -10,22 +10,21 @@ board =[[0,0,7,0,9,6,2,0,0],
         [9,4,0,0,7,0,0,3,1],
         [0,5,0,4,6,0,2,8,0]]
         
-possible_numbers = [1,2,3,4,5,6,7,8,9,]
+possible_numbers = [1,2,3,4,5,6,7,8,9]
 
 line = [possible_numbers]*9
 
-dummy_board = [[line],
-                [line],
-                [line],
-                [line],
-                [line],
-                [line],
-                [line],
-                [line],
-                [line]]
+dummy_board = [line,
+                line,
+                line,
+                line,
+                line,
+                line,
+                line,
+                line,
+                line]
 
 #pprint.pprint(dummy_board)
-
 def print_sudoku(board):
     for row in range(len(board)):
         print("|",end=" ")
@@ -33,16 +32,32 @@ def print_sudoku(board):
             print(board[row][column],end = " ")
         print("|")
 
+def create_dummy_square(dummy_board,square_x,square_y):
+    range = [1,2,3]
+    range_x = [(x+(square_x-1)*3)-1 for x in range]
+    range_y = [(y+(square_y-1)*3)-1 for y in range]
+    dummy_square = [[None,None,None],
+                    [None,None,None],
+                    [None,None,None],]
+    for row in range_x :
+        for column in range_y :
+            #print(dummy_board[row][column])
+            dummy_square[row][column]=dummy_board[row][column]
+    pprint.pprint(dummy_square)
+    return dummy_square
+
 def check_square(board,dummy_board,square_x,square_y):
     range = [1,2,3]
     range_x = [(x+(square_x-1)*3)-1 for x in range]
     range_y = [(y+(square_y-1)*3)-1 for y in range]
+
     for row in range_x :
-        print("|",end=" ")
         for column in range_y :
+            #if board[row][column] in board:
             print(board[row][column],end = " ")
         print("|")
 
     return 1
 
-check_square(board,dummy_board,3,1)
+#check_square(board,dummy_board,3,1)
+create_dummy_square(dummy_board,1,1)
