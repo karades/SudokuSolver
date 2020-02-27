@@ -1,4 +1,5 @@
 import pprint
+import copy
 
 board =[[0,0,7,0,9,6,2,0,0],
         [8,0,0,0,0,0,0,0,0],
@@ -10,21 +11,23 @@ board =[[0,0,7,0,9,6,2,0,0],
         [9,4,0,0,7,0,0,3,1],
         [0,5,0,4,6,0,2,8,0]]
         
+dummy_board =[[[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9]],
+[[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9]],
+[[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9]],
+[[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9]],
+[[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9]],
+[[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9]],
+[[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9]],
+[[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9]],
+[[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9]]]
 possible_numbers = [1,2,3,4,5,6,7,8,9]
+line = [possible_numbers for _ in range(9)]
+dummy_board_temp = [line for _ in range(9)]
 
-line = [possible_numbers]*9
+#dummy_board = copy.deepcopy(dummy_board_temp)
 
-dummy_board = [line,
-                line,
-                line,
-                line,
-                line,
-                line,
-                line,
-                line,
-                line]
 
-#pprint.pprint(dummy_board)
+pprint.pprint(dummy_board)
 def print_sudoku(board):
     for row in range(len(board)):
         print("|",end=" ")
@@ -42,22 +45,30 @@ def create_dummy_square(dummy_board,square_x,square_y):
     for row in range_x :
         for column in range_y :
             #print(dummy_board[row][column])
-            dummy_square[row][column]=dummy_board[row][column]
-    pprint.pprint(dummy_square)
+            dummy_possible_numbers = dummy_board[row][column]
+            dummy_square[range_x.index(row)][range_y.index(column)]= copy.deepcopy(dummy_possible_numbers)
+    #pprint.pprint(dummy_square)
     return dummy_square
 
 def check_square(board,dummy_board,square_x,square_y):
-    range = [1,2,3]
-    range_x = [(x+(square_x-1)*3)-1 for x in range]
-    range_y = [(y+(square_y-1)*3)-1 for y in range]
-
+    range_of_list = [1,2,3]
+    range_x = [(x+(square_x-1)*3)-1 for x in range_of_list]
+    range_y = [(y+(square_y-1)*3)-1 for y in range_of_list]
+    dummy_square = create_dummy_square(dummy_board,square_x,square_y)
     for row in range_x :
         for column in range_y :
-            #if board[row][column] in board:
-            print(board[row][column],end = " ")
-        print("|")
+            #print(board[row][column])
+            value = board[row][column] 
+            if value in dummy_square[range_x.index(row)][range_y.index(column)]:
+                for x in range(3):
+                    for y in range(3):
+                        dummy_square[x][y].remove(value)
+    for row in range_x:
+        for column in range_y:
+            dummy_board[row][column] = dummy_square[range_x.index(row)][range_y.index(column)]
+    pprint.pprint(dummy_square)
 
     return 1
 
-#check_square(board,dummy_board,3,1)
-create_dummy_square(dummy_board,1,1)
+check_square(board,dummy_board,1,1)
+#create_dummy_square(dummy_board,1,1)
