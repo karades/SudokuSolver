@@ -10,7 +10,7 @@ board =[[0,0,7,0,9,6,2,0,0],
         [0,0,0,8,0,1,5,4,0],
         [9,4,0,0,7,0,0,3,1],
         [0,5,0,4,6,0,2,8,0]]
-        
+
 possible_numbers = [1,2,3,4,5,6,7,8,9]
 dummy_board = [[possible_numbers for _ in range(9)] for _ in range(9)]
 
@@ -61,10 +61,18 @@ def check_square(board,dummy_board,square_x,square_y):
     for row in range_x:
         for column in range_y:
             dummy_board[row][column] = dummy_square[range_x.index(row)][range_y.index(column)]
-    pprint.pprint(dummy_square)
+    #pprint.pprint(dummy_square)
+    for row in range_x :
+        for column in range_y :
+            if len(dummy_board[row][column]) == 1 and dummy_board[row][column][0] !=0:
+                board[row][column] = dummy_board[row][column][0]
+    
 
     return 1
 
-check_square(board,dummy_board,1,1)
+
+for row in range(3):
+    for column in range(3):
+        check_square(board,dummy_board,row,column)
 #create_dummy_square(dummy_board,1,1)
-pprint.pprint(dummy_board)
+pprint.pprint(board)
