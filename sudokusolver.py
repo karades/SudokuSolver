@@ -10,6 +10,15 @@ board =[[0,0,7,0,9,6,2,0,0],
         [0,0,0,8,0,1,5,4,0],
         [9,4,0,0,7,0,0,3,1],
         [0,5,0,4,6,0,2,8,0]]
+# board =[[1,3,7,4,9,6,2,0,5],
+#         [8,0,0,0,0,0,0,0,0],
+#         [9,0,0,1,2,0,5,0,0],
+#         [4,1,0,9,0,8,0,6,3],
+#         [0,0,0,0,1,0,4,9,2],
+#         [6,0,0,0,3,4,8,1,0],
+#         [0,0,0,8,0,1,5,4,0],
+#         [9,4,0,0,7,0,0,3,1],
+#         [0,5,0,4,6,0,2,8,0]]
 
 possible_numbers = [1,2,3,4,5,6,7,8,9]
 dummy_board = [[possible_numbers for _ in range(9)] for _ in range(9)]
@@ -50,7 +59,9 @@ def check_square(board,dummy_board,square_x,square_y):
             value = board[row][column] 
 
             if value in dummy_square[range_x.index(row)][range_y.index(column)]:
+                #set 0, where there is already value at that place
                 dummy_square[range_x.index(row)][range_y.index(column)] = [0]
+
                 for x in range(3):
                     for y in range(3):
                         try:
@@ -62,6 +73,7 @@ def check_square(board,dummy_board,square_x,square_y):
         for column in range_y:
             dummy_board[row][column] = dummy_square[range_x.index(row)][range_y.index(column)]
     #pprint.pprint(dummy_square)
+
     for row in range_x :
         for column in range_y :
             if len(dummy_board[row][column]) == 1 and dummy_board[row][column][0] !=0:
@@ -70,9 +82,20 @@ def check_square(board,dummy_board,square_x,square_y):
 
     return 1
 
+def create_dummy_horizontal_line(dummy_board,row):
+    
+    return dummy_h_line
 
-for row in range(3):
-    for column in range(3):
-        check_square(board,dummy_board,row,column)
-#create_dummy_square(dummy_board,1,1)
-pprint.pprint(board)
+def check_line_horizontal(board,dummy_board,row):
+    dummy_line= create_dummy_horizontal_line(dummy_board,row)
+    value = board[row-1][column]
+
+
+    return 2
+
+# for row in range(3):
+#     for column in range(3):
+#         check_square(board,dummy_board,row,column)
+check_line_horizontal(board,dummy_board,1)
+
+pprint.pprint(dummy_board)
