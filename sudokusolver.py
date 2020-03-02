@@ -1,24 +1,15 @@
 import pprint
 import copy
 
-# board =[[0,0,7,0,9,6,2,0,0],
-#         [8,0,0,0,0,0,0,0,0],
-#         [9,0,0,1,2,0,5,0,0],
-#         [4,1,0,9,0,8,0,6,3],
-#         [0,0,0,0,1,0,4,9,2],
-#         [6,0,0,0,3,4,8,1,0],
-#         [0,0,0,8,0,1,5,4,0],
-#         [9,4,0,0,7,0,0,3,1],
-#         [0,5,0,4,6,0,2,8,0]]
-board =[[1,3,7,4,9,6,2,0,5],
-        [8,0,0,0,0,0,0,0,0],
-        [9,0,0,1,2,0,5,0,0],
-        [4,1,0,9,0,8,0,6,3],
-        [0,0,0,0,1,0,4,9,2],
-        [6,0,0,0,3,4,8,1,0],
-        [0,0,0,8,0,1,5,4,0],
-        [9,4,0,0,7,0,0,3,1],
-        [0,5,0,4,6,0,2,8,0]]
+board =[[0,1,0,6,0,4,3,0,7],
+        [3,5,6,0,0,0,0,0,0],
+        [0,0,0,0,5,3,6,9,0],
+        [0,8,3,2,6,0,4,0,9],
+        [0,0,0,0,0,0,0,0,0],
+        [4,0,5,0,7,8,2,6,0],
+        [0,4,2,5,3,0,0,0,0],
+        [0,0,0,0,0,0,7,2,4],
+        [7,0,9,4,0,2,0,8,0]]
 
 possible_numbers = [1,2,3,4,5,6,7,8,9]
 dummy_board = [[possible_numbers for _ in range(9)] for _ in range(9)]
@@ -65,7 +56,8 @@ def check_square(board,dummy_board,square_x,square_y):
                 for x in range(3):
                     for y in range(3):
                         try:
-                            dummy_square[x][y].remove(value)
+                            if value !=0:
+                                dummy_square[x][y].remove(value)
                         except ValueError:
                             pass
                         #if there is no value, catch exception and go!
@@ -80,13 +72,13 @@ def check_square(board,dummy_board,square_x,square_y):
                 board[row][column] = dummy_board[row][column][0]
                 dummy_board[row][column][0] = 0
     
-
+    #pprint.pprint(dummy_board)
     return 1
 
 def create_dummy_horizontal_line(dummy_board,row):
     dummy_h_line = [0,0,0,0,0,0,0,0,0]
     for column in range(9):
-        dummy_possible_numbers = dummy_board[row][column]
+        dummy_possible_numbers = dummy_board[row-1][column]
         dummy_h_line[column]= copy.deepcopy(dummy_possible_numbers)   
     #print(dummy_h_line)
 
@@ -100,7 +92,8 @@ def check_line_horizontal(board,dummy_board,row):
             dummy_line[column]=[0]
             for y in range(9):
                 try:
-                    dummy_line[y].remove(value)
+                    if value !=0:
+                        dummy_line[y].remove(value)
                 except ValueError:
                     pass
     for column in range(9):
@@ -108,24 +101,48 @@ def check_line_horizontal(board,dummy_board,row):
         if len(dummy_board[row-1][column]) ==1 and dummy_board[row-1][column][0] != 0:
             board[row-1][column] = dummy_board[row-1][column][0]
             dummy_board[row-1][column][0] = 0
-    #print(dummy_line)
+    #pprint.pprint(dummy_board)
     return 2
 
-def create_dummy_vertical_line(dummy_board,column):
+def create_dummy_vertical_line(dummy_board,column:int):
     dummy_v_line = [[0],[0],[0],[0],[0],[0],[0],[0],[0]]
     for row in range(9):
         dummy_possible_numbers = dummy_board[row][column-1]
-        dummy_v_line[column]= copy.deepcopy(dummy_possible_numbers) 
+        dummy_v_line[row]= copy.deepcopy(dummy_possible_numbers) 
+    #print(dummy_v_line)
     return dummy_v_line
+
 def check_line_vertical(board,dummy_board,column):
-    dummy_v_line = create_dummy_vertical_line
-
+    dummy_v_line = create_dummy_vertical_line(dummy_board,column)
+    for row in range(9):
+        value = board[row][column-1]
+        if value in dummy_v_line[row]:
+            dummy_v_line[row] = [0]
+            for x in range(9):
+                try:
+                    if value !=0:
+                        dummy_v_line[x].remove(value)
+                except ValueError:
+                    pass
+    for row in range(9):
+        dummy_board[row][column-1] = dummy_v_line[row]
+        if len(dummy_board[row][column-1]) ==1 and dummy_board[row][column-1][0] != 0:
+            board[row][column-1] = dummy_board[row][column-1][0]
+            dummy_board[row][column-1][0] = 0
+    
+    #pprint.pprint(dummy_board)
     return 3
-# for row in range(3):
-#     for column in range(3):
-#         check_square(board,dummy_board,row,column)
 
-#check_line_horizontal(board,dummy_board,2)
 
-pprint.pprint(dummy_board)
+
+check_square(board,dummy_board,2,2)
+for xd in [4,5,6]:
+    for yd in [4,5,6]:
+        check_line_horizontal(board,dummy_board,xd)
+        check_line_vertical(board,dummy_board,yd)
+
+for x in [3,4,5]:
+    for y in [3,4,5]:
+        print(dummy_board[x][y])
+#print(dummy_board)
 #pprint.pprint(board)
