@@ -1,5 +1,6 @@
 import pprint
 import copy
+import collections
 
 board =[[0,1,0,6,0,4,3,0,7],
         [3,5,6,0,0,0,0,0,0],
@@ -71,8 +72,14 @@ def check_square(board,dummy_board,square_x,square_y):
             if len(dummy_board[row][column]) == 1 and dummy_board[row][column][0] !=0:
                 board[row][column] = dummy_board[row][column][0]
                 dummy_board[row][column][0] = 0
-    
+    only_value_in_square = check_one_occ_square(dummy_square)
+    for row in range_x :
+        for column in range_y :
+            if only_value_in_square in dummy_board[row][column]:
+                print("found!")
+                board[row][column] = only_value_in_square
     #pprint.pprint(dummy_board)
+
     return 1
 
 def create_dummy_horizontal_line(dummy_board,row):
@@ -134,10 +141,21 @@ def check_line_vertical(board,dummy_board,column):
     return 3
 
 
+def check_one_occ_square(dummy_square):
+    temp_occ_list = [0 for _ in range(9)]   
+    for row in range(3):
+        for column in range(3):
+            for value in range(1,10):
+                if (dummy_square[row][column].count(value) !=0):
+                    temp_occ_list[value-1]+=dummy_square[row][column].count(value)
+    print(temp_occ_list)
+    for x in range(9):
+        if( temp_occ_list[x] == 1):
+            return (x+1)
 
-check_square(board,dummy_board,2,2)
 for xd in [4,5,6]:
     for yd in [4,5,6]:
+        check_square(board,dummy_board,2,2)
         check_line_horizontal(board,dummy_board,xd)
         check_line_vertical(board,dummy_board,yd)
 
@@ -145,4 +163,4 @@ for x in [3,4,5]:
     for y in [3,4,5]:
         print(dummy_board[x][y])
 #print(dummy_board)
-#pprint.pprint(board)
+pprint.pprint(board)
