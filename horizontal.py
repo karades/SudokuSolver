@@ -2,11 +2,12 @@ import pprint
 import copy
 
 def create_dummy_horizontal_line(dummy_board,row):
+    #create dummy list with possible values for the horizontal line
     dummy_h_line = [0,0,0,0,0,0,0,0,0]
     for column in range(9):
         dummy_possible_numbers = dummy_board[row-1][column]
         dummy_h_line[column]= copy.deepcopy(dummy_possible_numbers)   
-    print(dummy_h_line)
+    #print(dummy_h_line)
 
     return dummy_h_line
 
@@ -15,7 +16,9 @@ def check_line_horizontal(board,dummy_board,row):
     for column in range(9):
         value = board[row-1][column]
         if value in dummy_line[column]:
+            #if there is value in dummy line, try to delete it
             dummy_line[column]=[0]
+            #also if there is value, set it to [0], so dimension is the same and exclude it for later calculations
             for y in range(9):
                 try:
                     if value !=0:
@@ -27,6 +30,12 @@ def check_line_horizontal(board,dummy_board,row):
         if len(dummy_board[row-1][column]) ==1 and dummy_board[row-1][column][0] != 0:
             board[row-1][column] = dummy_board[row-1][column][0]
             dummy_board[row-1][column][0] = 0
+    #if there is one occurence of value, set this value there
+    only_value_h_line = check_one_occ_h_line(dummy_line)
+    for column in range(9):
+        if only_value_h_line in dummy_board[row][column]:
+            print("found!")
+            board[row][column] = only_value_h_line
     #pprint.pprint(dummy_board)
     return 2
 
