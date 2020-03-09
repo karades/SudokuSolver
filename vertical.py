@@ -26,7 +26,11 @@ def check_line_vertical(board,dummy_board,column):
         if len(dummy_board[row][column-1]) ==1 and dummy_board[row][column-1][0] != 0:
             board[row][column-1] = dummy_board[row][column-1][0]
             dummy_board[row][column-1][0] = 0
-    
+    only_value_v_line = check_one_occ_v_line(dummy_v_line)
+    for row in range(9):
+        if only_value_v_line in dummy_board[row][column]:
+            print("found!")
+            board[row][column] = only_value_v_line
     #pprint.pprint(dummy_board)
     return 3
 
