@@ -15,18 +15,20 @@ def check_line_horizontal(board,dummy_board,row):
     dummy_line= create_dummy_horizontal_line(dummy_board,row)
     for column in range(9):
         value = board[row-1][column]
+        if value in dummy_line[column]:
+            #if there is value in dummy line, try to delete it
+            dummy_line[column]=[0]
+
         for temp_column in range(9):
             if value in dummy_line[temp_column]:
+                #temp_found = True
                 for y in range(9):
                     try:
                         if value !=0:
                             dummy_line[y].remove(value)
                     except ValueError:
                         pass    
-        if value in dummy_line[column]:
-            #if there is value in dummy line, try to delete it
-            dummy_line[column]=[0]
-            #also if there is value, set it to [0], so dimension is the same and exclude it for later calculations
+
             for y in range(9):
                 try:
                     if value !=0:

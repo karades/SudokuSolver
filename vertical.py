@@ -13,6 +13,8 @@ def check_line_vertical(board,dummy_board,column):
     dummy_v_line = create_dummy_vertical_line(dummy_board,column)
     for row in range(9):
         value = board[row][column-1]
+        if value in dummy_v_line[row]:
+            dummy_v_line[row] = [0]
         for temp_row in range(9):
             if value in dummy_v_line[temp_row]:
                 for x in range(9):
@@ -21,8 +23,7 @@ def check_line_vertical(board,dummy_board,column):
                             dummy_v_line[x].remove(value)
                     except ValueError:
                         pass
-        if value in dummy_v_line[row]:
-            dummy_v_line[row] = [0]
+                    
             for x in range(9):
                 try:
                     if value !=0:
