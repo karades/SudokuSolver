@@ -7,8 +7,6 @@ def create_dummy_horizontal_line(dummy_board,row):
     for column in range(9):
         dummy_possible_numbers = dummy_board[row-1][column]
         dummy_h_line[column]= copy.deepcopy(dummy_possible_numbers)
-        if len(dummy_h_line)==0:
-            dummy_h_line[column] = [0]
     #print(dummy_h_line)
 
     return dummy_h_line
@@ -42,8 +40,9 @@ def check_line_horizontal(board,dummy_board,row):
         try:
             lonely_value = dummy_board[row-1][column][0]
         except IndexError:
-            lonely_value = [0]
             dummy_board[row-1][column] = [0]
+            lonely_value = dummy_board[row-1][column][0]
+
         if len(dummy_board[row-1][column]) ==1 and lonely_value != 0:
             board[row-1][column] = lonely_value
             for y in range(9):

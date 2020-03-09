@@ -13,8 +13,6 @@ def create_dummy_square(dummy_board,square_x,square_y):
             #print(dummy_board[row][column])
             dummy_possible_numbers = dummy_board[row][column]
             dummy_square[range_x.index(row)][range_y.index(column)]= copy.deepcopy(dummy_possible_numbers)
-            if len(dummy_square[range_x.index(row)][range_y.index(column)])==0:
-                dummy_square[range_x.index(row)][range_y.index(column)] = [0]
     #pprint.pprint(dummy_square)
     return dummy_square
 
@@ -58,8 +56,8 @@ def check_square(board,dummy_board,square_x,square_y):
             try:
                 lonely_value = dummy_board[row][column][0]
             except IndexError:
-                lonely_value =[0]
                 dummy_board[row][column] = [0]
+                lonely_value =dummy_board[row][column][0]
             if len(dummy_board[row][column]) == 1 and lonely_value !=0:
                 board[row][column] = lonely_value
                 for x in range_x:

@@ -43,8 +43,8 @@ def solve_sudoku(board,dummy_board):
     print(dummy_board)
 
 
-for x in range (3):
-    solve_sudoku(board,dummy_board)
+
+solve_sudoku(board,dummy_board)
 
 
 pprint.pprint(board)

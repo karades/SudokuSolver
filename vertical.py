@@ -6,8 +6,6 @@ def create_dummy_vertical_line(dummy_board,column:int):
     for row in range(9):
         dummy_possible_numbers = dummy_board[row][column-1]
         dummy_v_line[row]= copy.deepcopy(dummy_possible_numbers)
-        if len(dummy_v_line)==0:
-            dummy_v_line[row] = [0]
     #print(dummy_v_line)
     return dummy_v_line
 
@@ -37,8 +35,8 @@ def check_line_vertical(board,dummy_board,column):
         try:
             lonely_value = dummy_board[row][column-1][0]
         except IndexError:
-            lonely_value =[0]
             dummy_board[row][column-1] =[0]
+            lonely_value = dummy_board[row][column-1][0]
         if len(dummy_board[row][column-1]) ==1 and lonely_value != 0:
             board[row][column-1] = lonely_value
             for y in range(9):
