@@ -49,24 +49,35 @@ def check_square(board,dummy_board,square_x,square_y):
                 board[row][column] = dummy_board[row][column][0]
                 dummy_board[row][column][0] = 0
     only_value_in_square = check_one_occ_square(dummy_square)
-    for row in range_x :
-        for column in range_y :
-            if only_value_in_square in dummy_board[row][column]:
-                print("found!")
-                board[row][column] = only_value_in_square
+    if only_value_in_square !=0:
+        print("found!")
+        board[range_x[only_value_in_square[1]]][range_y[only_value_in_square[2]]]= only_value_in_square[0]
+        dummy_board[range_x[only_value_in_square[1]]][range_y[only_value_in_square[2]]] = [0]
+
     #pprint.pprint(dummy_board)
 
     return 1
 
 
 def check_one_occ_square(dummy_square):
-    temp_occ_list = [0 for _ in range(9)]   
+    temp_occ_list = [0 for _ in range(9)]
+    result=[0,0,0] 
     for row in range(3):
         for column in range(3):
             for value in range(1,10):
                 if (dummy_square[row][column].count(value) !=0):
                     temp_occ_list[value-1]+=dummy_square[row][column].count(value)
-    print(temp_occ_list)
+    #print(temp_occ_list)
     for x in range(9):
         if( temp_occ_list[x] == 1):
-            return (x+1)
+            for row in range(3):
+                for column in range(3):
+                    try:
+                        dummy_square[row][column].index(x+1)
+                        result[0]=x+1
+                        result[1]=row
+                        result[2]=column
+                        return result
+                    except ValueError:
+                        pass
+    return 0

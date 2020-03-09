@@ -27,14 +27,19 @@ def print_sudoku(board):
             print(board[row][column],end = " ")
         print("|")
 
-for xd in [4,5,6]:
-    for yd in [4,5,6]:
-        square.check_square(board,dummy_board,2,2)
-        horizontal.check_line_horizontal(board,dummy_board,xd)
-        vertical.check_line_vertical(board,dummy_board,yd)
+def solve_sudoku(board,dummy_board):
+    for row in range(1,10):
+        for column in range(1,10):
+            horizontal.check_line_horizontal(board,dummy_board,row)
+            vertical.check_line_vertical(board,dummy_board,column)
+    for row in range(1,4):
+        for column in range(1,4):
+            square.check_square(board,dummy_board,row,column)
+    print(dummy_board)
 
-for x in [3,4,5]:
-    for y in [3,4,5]:
-        print(dummy_board[x][y])
-#print(dummy_board)
-#pprint.pprint(board)
+
+for x in range (3):
+    solve_sudoku(board,dummy_board)
+
+
+pprint.pprint(board)
