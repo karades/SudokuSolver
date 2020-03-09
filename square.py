@@ -5,14 +5,16 @@ def create_dummy_square(dummy_board,square_x,square_y):
     range = [1,2,3]
     range_x = [(x+(square_x-1)*3)-1 for x in range]
     range_y = [(y+(square_y-1)*3)-1 for y in range]
-    dummy_square = [[None,None,None],
-                    [None,None,None],
-                    [None,None,None],]
+    dummy_square = [[0,0,0],
+                    [0,0,0],
+                    [0,0,0]]
     for row in range_x :
         for column in range_y :
             #print(dummy_board[row][column])
             dummy_possible_numbers = dummy_board[row][column]
             dummy_square[range_x.index(row)][range_y.index(column)]= copy.deepcopy(dummy_possible_numbers)
+            if len(dummy_square[range_x.index(row)][range_y.index(column)])==0:
+                dummy_square[range_x.index(row)][range_y.index(column)] = [0]
     #pprint.pprint(dummy_square)
     return dummy_square
 
@@ -53,9 +55,24 @@ def check_square(board,dummy_board,square_x,square_y):
 
     for row in range_x :
         for column in range_y :
-            if len(dummy_board[row][column]) == 1 and dummy_board[row][column][0] !=0:
-                board[row][column] = dummy_board[row][column][0]
-                dummy_board[row][column][0] = 0
+            try:
+                lonely_value = dummy_board[row][column][0]
+            except IndexError:
+                lonely_value =[0]
+                dummy_board[row][column] = [0]
+            if len(dummy_board[row][column]) == 1 and lonely_value !=0:
+                board[row][column] = lonely_value
+                for x in range_x:
+                    for y in range_y:
+                        try:
+                            if lonely_value !=0:
+                                dummy_board[x][y].remove(lonely_value)
+                                if len(dummy_board[x][y]) ==0:
+                                    dummy_board[x][y] == [0]
+                        except ValueError:
+                            pass
+                dummy_board[row][column] = [0]
+
     only_value_in_square = check_one_occ_square(dummy_square)
     if only_value_in_square !=0:
         print("found!")

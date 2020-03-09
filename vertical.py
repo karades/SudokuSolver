@@ -5,7 +5,9 @@ def create_dummy_vertical_line(dummy_board,column:int):
     dummy_v_line = [[0],[0],[0],[0],[0],[0],[0],[0],[0]]
     for row in range(9):
         dummy_possible_numbers = dummy_board[row][column-1]
-        dummy_v_line[row]= copy.deepcopy(dummy_possible_numbers) 
+        dummy_v_line[row]= copy.deepcopy(dummy_possible_numbers)
+        if len(dummy_v_line)==0:
+            dummy_v_line[row] = [0]
     #print(dummy_v_line)
     return dummy_v_line
 
@@ -32,9 +34,22 @@ def check_line_vertical(board,dummy_board,column):
                     pass
     for row in range(9):
         dummy_board[row][column-1] = dummy_v_line[row]
-        if len(dummy_board[row][column-1]) ==1 and dummy_board[row][column-1][0] != 0:
-            board[row][column-1] = dummy_board[row][column-1][0]
-            dummy_board[row][column-1][0] = 0
+        try:
+            lonely_value = dummy_board[row][column-1][0]
+        except IndexError:
+            lonely_value =[0]
+            dummy_board[row][column-1] =[0]
+        if len(dummy_board[row][column-1]) ==1 and lonely_value != 0:
+            board[row][column-1] = lonely_value
+            for y in range(9):
+                try:
+                    if lonely_value !=0:
+                        dummy_board[y][column-1].remove(lonely_value)
+                        if len(dummy_board[y][column-1]) ==0:
+                            dummy_board[y][column-1] == [0]
+                except ValueError:
+                    pass
+            dummy_board[row][column-1] = [0]
     only_value_v_line = check_one_occ_v_line(dummy_v_line)
     if only_value_v_line !=0:
         if only_value_v_line[0] in dummy_board[only_value_v_line[1]][column-1]:

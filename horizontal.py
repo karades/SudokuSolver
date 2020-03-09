@@ -6,7 +6,9 @@ def create_dummy_horizontal_line(dummy_board,row):
     dummy_h_line = [0,0,0,0,0,0,0,0,0]
     for column in range(9):
         dummy_possible_numbers = dummy_board[row-1][column]
-        dummy_h_line[column]= copy.deepcopy(dummy_possible_numbers)   
+        dummy_h_line[column]= copy.deepcopy(dummy_possible_numbers)
+        if len(dummy_h_line)==0:
+            dummy_h_line[column] = [0]
     #print(dummy_h_line)
 
     return dummy_h_line
@@ -37,9 +39,22 @@ def check_line_horizontal(board,dummy_board,row):
                     pass
     for column in range(9):
         dummy_board[row-1][column] = dummy_line[column]
-        if len(dummy_board[row-1][column]) ==1 and dummy_board[row-1][column][0] != 0:
-            board[row-1][column] = dummy_board[row-1][column][0]
-            dummy_board[row-1][column][0] = 0
+        try:
+            lonely_value = dummy_board[row-1][column][0]
+        except IndexError:
+            lonely_value = [0]
+            dummy_board[row-1][column] = [0]
+        if len(dummy_board[row-1][column]) ==1 and lonely_value != 0:
+            board[row-1][column] = lonely_value
+            for y in range(9):
+                try:
+                    if lonely_value !=0:
+                        dummy_board[row-1][y].remove(lonely_value)
+                        if len(dummy_board[row-1][y]) ==0:
+                            dummy_board[row-1][y] == [0]
+                except ValueError:
+                    pass
+            dummy_board[row-1][column] = [0]
     #if there is one occurence of value, set this value there
     only_value_h_line = check_one_occ_h_line(dummy_line)
     if only_value_h_line != 0:
