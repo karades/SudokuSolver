@@ -66,10 +66,7 @@ def put_poss_number(board,dummy_board):
             index[1] = board[number].index(0)
             index[0]=number
             break
-    for possis in dummy_board[index[0]][index[1]]:
-        board[index[0]][index[1]] = possis
-        #solve(board,dummy_board)
-        #now there should be reccurention
+    return index
 
 i=0
 
@@ -87,7 +84,12 @@ def solve(board,dummy_board):
     if if_Solved(board):
         pass
     else:
-        put_poss_number(board,dummy_board)
+        guard_board = copy.deepcopy(board)
+        index = put_poss_number(board,dummy_board)
+        for possis in dummy_board[index[0]][index[1]]:
+            board[index[0]][index[1]] = possis
+            solve(board,dummy_board)
+
 
 
 
