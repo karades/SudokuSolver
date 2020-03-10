@@ -55,9 +55,7 @@ def if_Solved(board):
             print("Not solved")
             return False
         else:
-            pass
-    print("Solved")
-    return True
+            return True
 
 def put_poss_number(board,dummy_board):
     index = [0,0]
@@ -71,6 +69,7 @@ def put_poss_number(board,dummy_board):
 i=0
 
 def solve(board,dummy_board):
+    guard_board = copy.deepcopy(board)
     while True:
         global i
         i+=1
@@ -79,20 +78,20 @@ def solve(board,dummy_board):
         solve_once(board,dummy_board)
         #print(i)
         if dummy_board_bef == dummy_board and board == board_bef:
-            break 
-    print("No change after: ",i," iterations")
-    if if_Solved(board):
-        pass
-    else:
-        guard_board = copy.deepcopy(board)
-        index = put_poss_number(board,dummy_board)
-        for possis in dummy_board[index[0]][index[1]]:
-            board[index[0]][index[1]] = possis
-            solve(board,dummy_board)
+            print("No change after: ",i," iterations")
+            if if_Solved(board):
+                return(print("solved"))
+            else:
+                index = put_poss_number(board,dummy_board)
+                for possis in dummy_board[index[0]][index[1]]:
+                    board[index[0]][index[1]] = possis
+                    solve(board,dummy_board)
+        
+    return(print("The End"))
 
 
 
+solve(board,dummy_board)
 
-solve(board1,dummy_board)
 
 print_sudoku(board)
