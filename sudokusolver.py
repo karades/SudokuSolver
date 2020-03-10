@@ -30,21 +30,21 @@ def print_sudoku(board):
 def solve_sudoku(board,dummy_board):
     for row in range(1,10):
         for column in range(1,10):
-            if (row==9):
+            if row ==9 and column ==2:
                 horizontal.check_line_horizontal(board,dummy_board,row)
-                vertical.check_line_vertical(board,dummy_board,column)
+                vertical.check_line_vertical(board,dummy_board,column)  
             else:
                 horizontal.check_line_horizontal(board,dummy_board,row)
                 vertical.check_line_vertical(board,dummy_board,column)
-            
+
     for row in range(1,4):
         for column in range(1,4):
             square.check_square(board,dummy_board,row,column)
     print(dummy_board)
 
 
-
-solve_sudoku(board,dummy_board)
+for x in range(3):
+    solve_sudoku(board,dummy_board)
 
 
 pprint.pprint(board)

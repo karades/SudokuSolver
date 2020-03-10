@@ -17,26 +17,11 @@ def check_line_horizontal(board,dummy_board,row):
         value = board[row-1][column]
         if value in dummy_line[column]:
             #if there is value in dummy line, try to delete it
-            dummy_line[column]=[0]
-
-        for temp_column in range(9):
-            if value in dummy_line[temp_column]:
-                #temp_found = True
-                for y in range(9):
-                    try:
-                        if value !=0:
-                            dummy_line[y].remove(value)
-                    except ValueError:
-                        pass    
-
-            for y in range(9):
-                try:
-                    if value !=0:
-                        dummy_line[y].remove(value)
-                except ValueError:
-                    pass
+            dummy_line[column]=[0]    
+        delete_existing_value(dummy_line,value)
     for column in range(9):
         dummy_board[row-1][column] = dummy_line[column]
+    for column in range(9):
         try:
             lonely_value = dummy_board[row-1][column][0]
         except IndexError:
@@ -58,6 +43,8 @@ def check_line_horizontal(board,dummy_board,row):
     only_value_h_line = check_one_occ_h_line(dummy_line)
     if only_value_h_line != 0:
         if only_value_h_line[0] in dummy_board[row-1][only_value_h_line[1]]:
+            #here we dont have to use delete value functtion, because
+            #if we find one occurence of value, we dont care about rest
             print("found!")
             board[row-1][only_value_h_line[1]] = only_value_h_line[0]
             dummy_board[row-1][only_value_h_line[1]] = [0]
@@ -83,3 +70,11 @@ def check_one_occ_h_line(dummy_h_line):
                 except ValueError:
                     pass
     return (0)
+
+def delete_existing_value(dummy_h_line,value):
+    for y in range(9):
+        try:
+            if value !=0:
+                dummy_h_line[y].remove(value)
+        except ValueError:
+            pass

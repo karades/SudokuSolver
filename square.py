@@ -30,22 +30,9 @@ def check_square(board,dummy_board,square_x,square_y):
                     if value in dummy_square[range_x.index(temp_row)][range_y.index(temp_column)]:
                         #set 0, where there is already value at that place
                         dummy_square[range_x.index(temp_row)][range_y.index(temp_column)] = [0]
-                    for x in range(3):
-                        for y in range(3):
-                            try:
-                                if value !=0:
-                                    dummy_square[x][y].remove(value)
-                            except ValueError:
-                                pass
+                    delete_existing_value(dummy_square,value)
                         #if there is no value, catch exception and go!
-            for x in range(3):
-                for y in range(3):
-                    try:
-                        if value !=0:
-                            dummy_square[x][y].remove(value)
-                    except ValueError:
-                        pass
-                        #if there is no value, catch exception and go!
+            delete_existing_value(dummy_square,value)
     for row in range_x:
         for column in range_y:
             dummy_board[row][column] = dummy_square[range_x.index(row)][range_y.index(column)]
@@ -104,3 +91,13 @@ def check_one_occ_square(dummy_square):
                     except ValueError:
                         pass
     return 0
+
+def delete_existing_value(dummy_square,value):
+    for x in range(3):
+        for y in range(3):
+            try:
+                if value !=0:
+                    dummy_square[x][y].remove(value)
+            except ValueError:
+                pass
+                #if there is no value, catch exception and go!
