@@ -48,7 +48,7 @@ def check_line_horizontal(board,dummy_board,row):
         if only_value_h_line[0] in dummy_board[row-1][only_value_h_line[1]]:
             #here we dont have to use delete value functtion, because
             #if we find one occurence of value, we dont care about rest
-            print("found!")
+            #print("found!")
             board[row-1][only_value_h_line[1]] = only_value_h_line[0]
             dummy_board[row-1][only_value_h_line[1]] = [0]
     #pprint.pprint(dummy_board)

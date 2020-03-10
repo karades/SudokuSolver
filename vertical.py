@@ -40,7 +40,7 @@ def check_line_vertical(board,dummy_board,column):
         if only_value_v_line[0] in dummy_board[only_value_v_line[1]][column-1]:
             #here we dont have to use delete value functtion, because
             #if we find one occurence of value, we dont care about rest
-            print("found!")
+            #print("found!")
             board[only_value_v_line[1]][column-1] = only_value_v_line[0]
             dummy_board[only_value_v_line[1]][column-1] = [0]
 

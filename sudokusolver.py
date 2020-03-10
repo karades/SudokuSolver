@@ -30,6 +30,7 @@ dummy_board = [[possible_numbers for _ in range(9)] for _ in range(9)]
 #dummy_board = copy.deepcopy(dummy_board_temp)
 #pprint.pprint(dummy_board)
 
+
 def print_sudoku(board):
     for row in range(len(board)):
         print("|",end=" ")
@@ -37,24 +38,59 @@ def print_sudoku(board):
             print(board[row][column],end = " ")
         print("|")
 
-def solve_sudoku(board,dummy_board):
+def solve_once(board,dummy_board):
     for row in range(1,10):
         for column in range(1,10):
-            if row ==9 and column ==2:
-                horizontal.check_line_horizontal(board,dummy_board,row)
-                vertical.check_line_vertical(board,dummy_board,column)  
-            else:
                 horizontal.check_line_horizontal(board,dummy_board,row)
                 vertical.check_line_vertical(board,dummy_board,column)
 
     for row in range(1,4):
         for column in range(1,4):
             square.check_square(board,dummy_board,row,column)
-    print(dummy_board)
+    #print(dummy_board)
+
+def if_Solved(board):
+    for number in range(9):
+        if 0 in board[number]:
+            print("Not solved")
+            return False
+        else:
+            pass
+    print("Solved")
+    return True
+
+def put_poss_number(board,dummy_board):
+    index = [0,0]
+    for number in range(9):
+        if 0 in board[number]:
+            index[1] = board[number].index(0)
+            index[0]=number
+            break
+    for possis in dummy_board[index[0]][index[1]]:
+        board[index[0]][index[1]] = possis
+        #solve(board,dummy_board)
+        #now there should be reccurention
+
+i=0
+
+def solve(board,dummy_board):
+    while True:
+        global i
+        i+=1
+        dummy_board_bef = copy.deepcopy(dummy_board)
+        board_bef = copy.deepcopy(board)
+        solve_once(board,dummy_board)
+        #print(i)
+        if dummy_board_bef == dummy_board and board == board_bef:
+            break 
+    print("No change after: ",i," iterations")
+    if if_Solved(board):
+        pass
+    else:
+        put_poss_number(board,dummy_board)
 
 
-for xd in range(10):
-    solve_sudoku(board1,dummy_board)
 
+solve(board1,dummy_board)
 
-pprint.pprint(board)
+print_sudoku(board)

@@ -60,7 +60,7 @@ def check_square(board,dummy_board,square_x,square_y):
     if only_value_in_square !=0:
         #here we dont have to use delete value functtion, because
         #if we find one occurence of value, we dont care about rest
-        print("found!")
+        #print("found!")
         board[range_x[only_value_in_square[1]]][range_y[only_value_in_square[2]]]= only_value_in_square[0]
         dummy_board[range_x[only_value_in_square[1]]][range_y[only_value_in_square[2]]] = [0]
 
