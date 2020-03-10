@@ -14,6 +14,16 @@ board =[[0,1,0,6,0,4,3,0,7],
         [0,0,0,0,0,0,7,2,4],
         [7,0,9,4,0,2,0,8,0]]
 
+board1=[[2,0,0,0,0,0,0,6,0],
+        [0,0,0,5,0,6,4,0,0],
+        [0,5,0,0,1,0,0,0,7],
+        [5,0,0,6,0,8,7,1,0],
+        [0,0,0,0,0,0,0,0,0],
+        [0,2,7,1,0,9,0,0,8],
+        [6,0,0,0,5,0,0,9,0],
+        [0,0,2,4,0,1,0,0,0],
+        [0,8,0,0,0,0,0,0,2]]
+
 possible_numbers = [1,2,3,4,5,6,7,8,9]
 dummy_board = [[possible_numbers for _ in range(9)] for _ in range(9)]
 
@@ -43,8 +53,8 @@ def solve_sudoku(board,dummy_board):
     print(dummy_board)
 
 
-for x in range(3):
-    solve_sudoku(board,dummy_board)
+for xd in range(10):
+    solve_sudoku(board1,dummy_board)
 
 
 pprint.pprint(board)

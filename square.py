@@ -23,16 +23,13 @@ def check_square(board,dummy_board,square_x,square_y):
     dummy_square = create_dummy_square(dummy_board,square_x,square_y)
     for row in range_x :
         for column in range_y :
-            #print(board[row][column])
+
             value = board[row][column] 
-            for temp_row in range_x:
-                for temp_column in range_y:
-                    if value in dummy_square[range_x.index(temp_row)][range_y.index(temp_column)]:
-                        #set 0, where there is already value at that place
-                        dummy_square[range_x.index(temp_row)][range_y.index(temp_column)] = [0]
-                    delete_existing_value(dummy_square,value)
-                        #if there is no value, catch exception and go!
+            if value in dummy_square[range_x.index(row)][range_y.index(column)]:
+                #set 0, where there is already value at that place
+                dummy_square[range_x.index(row)][range_y.index(column)] = [0]
             delete_existing_value(dummy_square,value)
+
     for row in range_x:
         for column in range_y:
             dummy_board[row][column] = dummy_square[range_x.index(row)][range_y.index(column)]
@@ -47,6 +44,8 @@ def check_square(board,dummy_board,square_x,square_y):
                 lonely_value =dummy_board[row][column][0]
             if len(dummy_board[row][column]) == 1 and lonely_value !=0:
                 board[row][column] = lonely_value
+                dummy_square[range_x.index(row)][range_y.index(column)] = [0]
+                dummy_board[row][column] = [0]
                 for x in range_x:
                     for y in range_y:
                         try:
@@ -56,10 +55,11 @@ def check_square(board,dummy_board,square_x,square_y):
                                     dummy_board[x][y] == [0]
                         except ValueError:
                             pass
-                dummy_board[row][column] = [0]
 
     only_value_in_square = check_one_occ_square(dummy_square)
     if only_value_in_square !=0:
+        #here we dont have to use delete value functtion, because
+        #if we find one occurence of value, we dont care about rest
         print("found!")
         board[range_x[only_value_in_square[1]]][range_y[only_value_in_square[2]]]= only_value_in_square[0]
         dummy_board[range_x[only_value_in_square[1]]][range_y[only_value_in_square[2]]] = [0]
