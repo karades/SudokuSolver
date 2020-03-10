@@ -12,6 +12,7 @@ def create_dummy_horizontal_line(dummy_board,row):
     return dummy_h_line
 
 def check_line_horizontal(board,dummy_board,row):
+    #check horizontal line for possibilities, in some cases put proper value
     dummy_line= create_dummy_horizontal_line(dummy_board,row)
     for column in range(9):
         value = board[row-1][column]
@@ -22,6 +23,7 @@ def check_line_horizontal(board,dummy_board,row):
     for column in range(9):
         dummy_board[row-1][column] = dummy_line[column]
     for column in range(9):
+        #added this in case there is [] , then for safety set it to [0]
         try:
             lonely_value = dummy_board[row-1][column][0]
         except IndexError:
@@ -29,8 +31,9 @@ def check_line_horizontal(board,dummy_board,row):
             lonely_value = dummy_board[row-1][column][0]
 
         if len(dummy_board[row-1][column]) ==1 and lonely_value != 0:
-            board[row-1][column] = lonely_value
-            for y in range(9):
+        #there must be one value and it shouldn't be 0
+            board[row-1][column] = lonely_value #write this value on board
+            for y in range(9): #delete this number from dummy list from line
                 try:
                     if lonely_value !=0:
                         dummy_board[row-1][y].remove(lonely_value)
@@ -52,18 +55,21 @@ def check_line_horizontal(board,dummy_board,row):
     return 2
 
 def check_one_occ_h_line(dummy_h_line):
+    #check if there is one possibility for value in horizontal line
     temp_occ_list = [0 for _ in range(9)]
     result = [0,0]
     for column in range(9):
         for value in range(1,10):
             if (dummy_h_line[column].count(value)!=0):
+                #sum occurences into list
                 temp_occ_list[value-1] += dummy_h_line[column].count(value)
-    #print(temp_occ_list)
+
     for x in range(9):
         if( temp_occ_list[x] == 1):
             for y in range(9):
                 try:
-                    dummy_h_line[y].index(x+1)
+                    #return coordinates and value, for which there is one occurence
+                    dummy_h_line[y].index(x+1) 
                     result[0]=x+1
                     result[1]=y
                     return result
@@ -72,9 +78,11 @@ def check_one_occ_h_line(dummy_h_line):
     return (0)
 
 def delete_existing_value(dummy_h_line,value):
+    #if there is value , which is on board, try to remove it
     for y in range(9):
         try:
             if value !=0:
                 dummy_h_line[y].remove(value)
         except ValueError:
+        #if it isn't in list, catch error
             pass
