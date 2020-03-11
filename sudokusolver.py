@@ -50,12 +50,14 @@ def solve_once(board,dummy_board):
     #print(dummy_board)
 
 def if_Solved(board):
+    temp_sum =0
     for number in range(9):
-        if 0 in board[number]:
-            print("Not solved")
-            return False
-        else:
-            return True
+        temp_sum +=board[number].count(0)
+    if temp_sum >1:
+        print("Not solved")
+        return False
+    else:
+        return True
 
 def put_poss_number(board,dummy_board):
     index = [0,0]
@@ -80,18 +82,22 @@ def solve(board,dummy_board):
         if dummy_board_bef == dummy_board and board == board_bef:
             print("No change after: ",i," iterations")
             if if_Solved(board):
+                pprint.pprint(board)
                 return(print("solved"))
             else:
                 index = put_poss_number(board,dummy_board)
                 for possis in dummy_board[index[0]][index[1]]:
+                    if possis ==0:
+                        return False
                     board[index[0]][index[1]] = possis
                     solve(board,dummy_board)
-        
+                    board = copy.deepcopy(guard_board)
+                    
     return(print("The End"))
 
 
 
-solve(board,dummy_board)
+solve(board1,dummy_board)
 
 
-print_sudoku(board)
+print_sudoku(board1)
