@@ -50,10 +50,20 @@ def solve_once(board,dummy_board):
     #print(dummy_board)
 
 def if_Solved(board):
+    temp_sum =0
     for number in range(9):
+<<<<<<< HEAD
         if 0 in board[number]:
             return False
     return True
+=======
+        temp_sum +=board[number].count(0)
+    if temp_sum >1:
+        print("Not solved")
+        return False
+    else:
+        return True
+>>>>>>> 7c1db3f9c84c5da6196d27944ab19b8a59f865c5
 
 def put_poss_number(board,dummy_board):
     index = [0,0]
