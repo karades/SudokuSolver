@@ -52,10 +52,8 @@ def solve_once(board,dummy_board):
 def if_Solved(board):
     for number in range(9):
         if 0 in board[number]:
-            print("Not solved")
             return False
-        else:
-            return True
+    return True
 
 def put_poss_number(board,dummy_board):
     index = [0,0]
@@ -70,28 +68,42 @@ i=0
 
 def solve(board,dummy_board):
     guard_board = copy.deepcopy(board)
+    guard_dummy = copy.deepcopy(dummy_board)
     while True:
         global i
         i+=1
         dummy_board_bef = copy.deepcopy(dummy_board)
         board_bef = copy.deepcopy(board)
+        if if_Solved(board_bef):
+            print("solved")
+            hyper_guard = copy.deepcopy(board_bef)
+            return board
         solve_once(board,dummy_board)
         #print(i)
         if dummy_board_bef == dummy_board and board == board_bef:
             print("No change after: ",i," iterations")
             if if_Solved(board):
-                return(print("solved"))
+                print("solved")
+                return board
             else:
                 index = put_poss_number(board,dummy_board)
                 for possis in dummy_board[index[0]][index[1]]:
+                    if possis == 0:
+                        return False
                     board[index[0]][index[1]] = possis
-                    solve(board,dummy_board)
+                    dummy_board[index[0]][index[1]] =[0]
+                    if (solve(board,dummy_board) == board):
+                        print(board)
+                        return board
+                    else:
+                        board = copy.deepcopy(guard_board)
+                        dummy_board = copy.deepcopy(guard_dummy)
         
-    return(print("The End"))
+    return(print("The end"))
 
 
 
-solve(board,dummy_board)
+solve(board1,dummy_board)
 
 
-print_sudoku(board)
+print_sudoku(board1)
