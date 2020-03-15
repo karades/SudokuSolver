@@ -50,20 +50,10 @@ def solve_once(board,dummy_board):
     #print(dummy_board)
 
 def if_Solved(board):
-    temp_sum =0
     for number in range(9):
-<<<<<<< HEAD
         if 0 in board[number]:
             return False
     return True
-=======
-        temp_sum +=board[number].count(0)
-    if temp_sum >1:
-        print("Not solved")
-        return False
-    else:
-        return True
->>>>>>> 7c1db3f9c84c5da6196d27944ab19b8a59f865c5
 
 def put_poss_number(board,dummy_board):
     index = [0,0]
@@ -75,8 +65,9 @@ def put_poss_number(board,dummy_board):
     return index
 
 i=0
-
+final_result =[[0 for _ in range(9)] for _ in range(9)]
 def solve(board,dummy_board):
+    global final_result
     guard_board = copy.deepcopy(board)
     guard_dummy = copy.deepcopy(dummy_board)
     while True:
@@ -84,36 +75,38 @@ def solve(board,dummy_board):
         i+=1
         dummy_board_bef = copy.deepcopy(dummy_board)
         board_bef = copy.deepcopy(board)
-        if if_Solved(board_bef):
+        if if_Solved(board):
             print("solved")
-            hyper_guard = copy.deepcopy(board_bef)
-            return board
+            final_result = copy.deepcopy(board)
+            return final_result
         solve_once(board,dummy_board)
         #print(i)
         if dummy_board_bef == dummy_board and board == board_bef:
             print("No change after: ",i," iterations")
             if if_Solved(board):
                 print("solved")
-                return board
+                return final_result
             else:
                 index = put_poss_number(board,dummy_board)
                 for possis in dummy_board[index[0]][index[1]]:
+                    board = copy.deepcopy(guard_board)
+                    dummy_board = copy.deepcopy(guard_dummy)
                     if possis == 0:
                         return False
                     board[index[0]][index[1]] = possis
                     dummy_board[index[0]][index[1]] =[0]
                     if (solve(board,dummy_board) == board):
                         print(board)
-                        return board
-                    else:
-                        board = copy.deepcopy(guard_board)
-                        dummy_board = copy.deepcopy(guard_dummy)
-        
+                        return final_result
+                    elif if_Solved(final_result):
+                        board = copy.deepcopy(final_result)
+                        return final_result
+                    else: break
     return(print("The end"))
 
 
 
-solve(board1,dummy_board)
+board1 = solve(board1,dummy_board)
 
 
 print_sudoku(board1)
