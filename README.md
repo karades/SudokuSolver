@@ -1,9 +1,10 @@
 # SudokuSolver
 Sudoku Solver in Python
 
-My first own project to train in python language. 
+I wanted to use here not only recursion to solve our sudoky, but firstly try to solve it with basic methods, then if it is needed, use recursion to solve it.
 
-I want to use here not 100% recursion, but I want to code program, as it would solve sudoku like human. 
-It should check possibilities by square ( if there is value in square, it won't be in this square ) and also horizontal / vertical lines ( in same way of thinking.
+At the beginning, it checks by square possible values, which are hold in 3d list. If there is one possiibility of number for cell or there is one number in cell, which can't be put elsewhere, it puts it on board cell.
 
-At the end, where program would be in endless loop , then use recursion to solve it, but with much less possibilities.
+Then it does the same for horizontal and vertical lines.
+
+At the end, if there are 2 iterations, which gives us no difference in possibility board or main board, it uses recursion to put possible value at the empty board cell, then try to solve it. If it is impossible, it tries another one until it is solved.
