@@ -23,7 +23,7 @@ def check_line_horizontal(board,dummy_board,row):
     for column in range(9):
         dummy_board[row-1][column] = dummy_line[column]
     for column in range(9):
-        #added this in case there is [] , then for safety set it to [0]
+        #added this in case there is [] in list, then for safety set it to [0]
         try:
             lonely_value = dummy_board[row-1][column][0]
         except IndexError:

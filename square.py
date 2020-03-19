@@ -8,18 +8,18 @@ def create_dummy_square(dummy_board,square_x,square_y):
     dummy_square = [[0,0,0],
                     [0,0,0],
                     [0,0,0]]
+    #create square based on coordinates
     for row in range_x :
         for column in range_y :
-            #print(dummy_board[row][column])
             dummy_possible_numbers = dummy_board[row][column]
             dummy_square[range_x.index(row)][range_y.index(column)]= copy.deepcopy(dummy_possible_numbers)
-    #pprint.pprint(dummy_square)
     return dummy_square
 
 def check_square(board,dummy_board,square_x,square_y):
     range_of_list = [1,2,3]
     range_x = [(x+(square_x-1)*3)-1 for x in range_of_list]
     range_y = [(y+(square_y-1)*3)-1 for y in range_of_list]
+    #create square
     dummy_square = create_dummy_square(dummy_board,square_x,square_y)
     for row in range_x :
         for column in range_y :
@@ -33,16 +33,18 @@ def check_square(board,dummy_board,square_x,square_y):
     for row in range_x:
         for column in range_y:
             dummy_board[row][column] = dummy_square[range_x.index(row)][range_y.index(column)]
-    #pprint.pprint(dummy_square)
 
     for row in range_x :
         for column in range_y :
+            #find value , which length is 1 and put this value on board, because its only possible value
+            #added catch exception in case there is [] in list, then for safety set it to [0]
             try:
                 lonely_value = dummy_board[row][column][0]
             except IndexError:
                 dummy_board[row][column] = [0]
                 lonely_value =dummy_board[row][column][0]
             if len(dummy_board[row][column]) == 1 and lonely_value !=0:
+                # if its only value in board, at that coordinates it's our value, and set rest to 0 
                 board[row][column] = lonely_value
                 dummy_square[range_x.index(row)][range_y.index(column)] = [0]
                 dummy_board[row][column] = [0]
