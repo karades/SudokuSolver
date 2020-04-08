@@ -1,7 +1,7 @@
 # SudokuSolver
 Sudoku Solver in Python
 
-I wanted to use here not only recursion to solve our sudoky, but firstly try to solve it with basic methods, then if it is needed, use recursion to solve it.
+I wanted to use here not only recursion to solve our sudoku, but firstly try to solve it with basic methods, then if it is needed, use recursion to solve it.
 
 At the beginning, it checks by square possible values, which are hold in 3d list. If there is one possiibility of number for cell or there is one number in cell, which can't be put elsewhere, it puts it on board cell.
 
